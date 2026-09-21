@@ -1,18 +1,18 @@
- import streamlit as st
+import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 
 # App configuration
-st.set_page_config(page_title="Advanced RF Design Engineering Suite", layout="wide")
+st.set_page_config(page_title="Master RF Design Engineering Suite", layout="wide")
 st.title("📡 Master RF Design Engineering Suite")
-st.markdown("A interactive playground implementing core formulas from the *RF Design Engineering Master Guide*.")
+st.markdown("An interactive dashboard implementing core formulas from the *RF Design Engineering Master Guide*.")
 
 # Sidebar navigation
 tool_choice = st.sidebar.radio(
     "Select an RF Analysis Module",
     [
         "Free-Space Path Loss (FSPL)", 
-        "Impedance Mismatch & VSWR",
+        "Impedance Mismatch & VSWR Mismatch",
         "Cascaded Noise Figure (Friis Formula)",
         "End-to-End Link Budget Calculator",
         "IQ Constellation Mismatch Visualizer",
@@ -59,9 +59,9 @@ if tool_choice == "Free-Space Path Loss (FSPL)":
             f"Doubling your operating distance adds roughly **6 dB** of attenuation.")
 
 # ----------------------------------------------------
-# MODULE 2: IMPEDANCE MISMATCH & VSWR
+# MODULE 2: IMPEDANCE MISMATCH & VSWR MISMATCH
 # ----------------------------------------------------
-elif tool_choice == "Impedance Mismatch & VSWR":
+elif tool_choice == "Impedance Mismatch & VSWR Mismatch":
     st.header("⚡ Impedance Mismatch & VSWR Analyzer")
     st.markdown(
         r"Formulas: $\Gamma = \frac{Z_L - Z_0}{Z_L + Z_0} \quad \text{and} \quad VSWR = \frac{1 + |\Gamma|}{1 - |\Gamma|}$"
@@ -80,7 +80,7 @@ elif tool_choice == "Impedance Mismatch & VSWR":
         
         st.subheader("Results")
         st.metric(label="Reflection Coefficient (Γ)", value=f"{gamma:.3f}")
-        st.metric(label="VSWR", value=f"{vswr:.2f} : 1")
+        st.metric(label="VSWR Status", value=f"{vswr:.2f} : 1")
         st.metric(label="Return Loss (RL)", value=f"{return_loss:.2f} dB" if return_loss != float('inf') else "∞ dB")
         
     with col2:
@@ -192,4 +192,3 @@ elif tool_choice == "End-to-End Link Budget Calculator":
         levels = [ptx, eirp, eirp - fspl_mid, prx, sensitivity]
         
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=stages, y=levels, mode='lines+markers+text',
